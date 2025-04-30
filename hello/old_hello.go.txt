@@ -1,0 +1,95 @@
+package main
+
+// Pacote principal, começando por aqui
+
+import (
+	"fmt"
+	"reflect"
+)
+
+// Pacote externo
+
+//go build hello.go
+//go run hello.go
+
+func old_main() {
+	// Variáveis declaradas devem ser usadas, se não for usada tem que ser removida
+	// Se o valor for atribuído diretamente na declaração, o tipo pode ser removido da declaraçao
+	var nome string = "Cezar"
+	var idade int            // Se não tem valor, o valor será zero (Branco para string)
+	var versao float32 = 1.1 //Float caso vc remova o tipo na declaração, ele vai assumir o maior
+
+	// Variáveis podem ser declaradas sem usar a palavra var
+	versaoSemDeclaracao := 10.2
+
+	// Primeira letra da função de um pacote externo é maiúscula.
+	fmt.Println("Hello, world.", nome, "Sua idade é", idade)
+	fmt.Println("Current version", versao)
+
+	fmt.Println("O tipo da variavel versaoSemDeclaracao é", reflect.TypeOf(versaoSemDeclaracao))
+
+	// Não precisa de ponto e vírgula no final das instruções, ele é opcional.
+	// A recomendação é não colocar, tanto que as extensões por padrão apagam caso tente colocar
+	// A posição da chave é sempre ao lado da função, caso vc tente quebrar isso o programa não vai funcionar.
+
+	fmt.Println("1- Iniciar Monitoramento")
+	fmt.Println("2- Exibir Logs")
+	fmt.Println("0- Sair do Programa")
+
+	var command int
+	// fmt.Scanf("%d", &command) //É preciso passar o ponteiro da variável com &
+	fmt.Scan(&command) //Scan direto vc não precisa passar o tipo, caso o tipo informado seja incorreto, o scan volta o valor padrão do tipo. Nesse caso, zero
+
+	// fmt.Printf("Variable address:", &command)
+	fmt.Println("Selected option:", command)
+
+	// if command == 1 {
+	// 	fmt.Println("Monitorando...")
+	// } else if command == 2 {
+	// 	fmt.Println("Exibindo logs...")
+	// } else if command == 0 {
+	// 	fmt.Println("Saindo do programa")
+	// } else {
+	// 	fmt.Println("Comando inválido")
+	// }
+
+	switch command {
+	case 1:
+		fmt.Println("Monitorando...")
+	case 2:
+		fmt.Println("Exibindo logs...")
+	case 0:
+		fmt.Println("Saindo do programa")
+	default:
+		fmt.Println("Comando inválido")
+	}
+
+	var sites [4]string // Array, sempre tem tamanho fixo
+	sites[0] = "https://www.alura.com.br"
+	sites[1] = "https://httpbin.org/status/404"
+	sites[2] = "https://www.pudim.com.br"
+
+}
+
+
+func exibeNomes() {
+	nomes := []string{"Cezar", "Manolo", "Fulano"} //slice, implementado em cima do array, mas dinamico
+	fmt.Println("Total de nomes: ", len(nomes))
+	fmt.Println("Capacidade máxima: ", cap(nomes))
+	nomes = append(nomes, "Maria")
+
+	fmt.Println(nomes)
+	fmt.Println("Total de nomes: ", len(nomes))
+	fmt.Println("Capacidade máxima: ", cap(nomes))
+
+}
+
+
+		// _, idade := devolveNomeEIdade()
+		// fmt.Println(idade)
+
+func devolveNomeEIdade() (string, int) {
+	nome := "Cezar"
+	idade := 32
+	return nome, idade
+}

@@ -1,0 +1,27 @@
+https://www.alura.com.br- online: true
+https://httpbin.org/status/404- online: false
+https://www.pudim.com.br- online: true
+https://www.alura.com.br- online: true
+https://httpbin.org/status/404- online: false
+https://www.pudim.com.br- online: true
+https://www.alura.com.br- online: true
+https://httpbin.org/status/404- online: false
+https://www.pudim.com.br- online: true
+28/04/2025 21:47:53 - https://www.alura.com.br- online: true
+28/04/2025 21:48:00 - https://httpbin.org/status/404- online: false
+28/04/2025 21:48:01 - https://www.pudim.com.br- online: true
+28/04/2025 21:48:02 - https://www.alura.com.br- online: true
+28/04/2025 21:48:06 - https://httpbin.org/status/404- online: false
+28/04/2025 21:48:06 - https://www.pudim.com.br- online: true
+28/04/2025 21:48:07 - https://www.alura.com.br- online: true
+28/04/2025 21:48:16 - https://httpbin.org/status/404- online: false
+28/04/2025 21:48:16 - https://www.pudim.com.br- online: true
+28/04/2025 21:54:46 - https://www.alura.com.br- online: true
+28/04/2025 21:54:50 - https://httpbin.org/status/404- online: false
+28/04/2025 21:54:51 - https://www.pudim.com.br- online: true
+28/04/2025 21:54:53 - https://www.alura.com.br- online: true
+28/04/2025 21:54:54 - https://httpbin.org/status/404- online: false
+28/04/2025 21:54:55 - https://www.pudim.com.br- online: true
+28/04/2025 21:54:56 - https://www.alura.com.br- online: true
+28/04/2025 21:55:00 - https://httpbin.org/status/404- online: false
+28/04/2025 21:55:00 - https://www.pudim.com.br- online: true
