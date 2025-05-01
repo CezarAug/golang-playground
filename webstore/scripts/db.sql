@@ -1,0 +1,29 @@
+-- Database: store
+
+-- DROP DATABASE IF EXISTS store;
+
+CREATE DATABASE store
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+
+CREATE TABLE PRODUCTS (
+	ID SERIAL PRIMARY KEY,
+	NAME VARCHAR,
+	DESCRIPTION VARCHAR,
+	PRICE DECIMAL,
+	QUANTITY INTEGER
+)
+
+
+INSERT INTO PRODUCTS (NAME, DESCRIPTION, PRICE, QUANTITY) 
+VALUES 
+('TShirt', 'Black', 19, 10),
+('Earphone', 'Nice one', 99, 5)
