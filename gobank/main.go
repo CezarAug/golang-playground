@@ -26,7 +26,7 @@ func main() {
 	account.Deposit(1000)
 	fmt.Println(account.Balance())
 
-	PayBill(&account, 100)
+	payBill(&account, 100)
 	fmt.Println(account.Balance())
 
 	savingsAccount := accounts.SavingsAccount{}
@@ -34,7 +34,7 @@ func main() {
 
 }
 
-func PayBill(account validateAccount, billAmount float64) {
+func payBill(account validateAccount, billAmount float64) {
 	account.Withdraw(billAmount)
 }
 
