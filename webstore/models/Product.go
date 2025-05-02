@@ -44,3 +44,15 @@ func CreateProduct(name, description string, price float64, quantity int) {
 
 	insert.Exec(name, description, price, quantity)
 }
+
+func DeleteProduct(productId string) {
+	connection := db.Connect()
+	defer connection.Close()
+
+	delete, err := db.Connect().Prepare("DELETE FROM PRODUCTS WHERE ID=$1")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	delete.Exec(productId)
+}

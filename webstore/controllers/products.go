@@ -35,6 +35,15 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 301)
 }
 
+func Delete(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		productId := r.URL.Query().Get("id")
+		models.DeleteProduct(productId)
+	}
+
+	http.Redirect(w, r, "/", 301)
+}
+
 func convertFloat(value string, attributeName string) float64 {
 	convertedValue, err := strconv.ParseFloat(value, 64)
 	if err != nil {
