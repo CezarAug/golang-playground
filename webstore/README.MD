@@ -1,4 +1,4 @@
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CezarAug_golang-playground&metric=alert_status&token=d7bebff9b85a057a22169ec63457ef63b29d7555)](https://sonarcloud.io/summary/new_code?id=CezarAug_golang-playground)
 
 ### How to run
 
