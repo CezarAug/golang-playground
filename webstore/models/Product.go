@@ -31,3 +31,16 @@ func GetProducts() []Product {
 	}
 	return products
 }
+
+func CreateProduct(name, description string, price float64, quantity int) {
+	connection := db.Connect()
+	defer connection.Close()
+
+	//TODO: Check how to prevent injections and others here
+	insert, err := connection.Prepare("INSERT INTO PRODUCTS(NAME, DESCRIPTION, PRICE, QUANTITY) VALUES($1, $2, $3, $4)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	insert.Exec(name, description, price, quantity)
+}
