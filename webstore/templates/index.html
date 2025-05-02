@@ -14,6 +14,7 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,6 +24,7 @@
                             <td>{{.Description}}</td>
                             <td>{{.Price}}</td>
                             <td>{{.Quantity}}</td>
+                            <td><a href="edit?id={{.Id}}"class="btn btn-info">Editar</a></td>
                             <td><button onclick="onDelete('{{.Id}}')" class="btn btn-danger">Delete</button></td>
                         </tr>
                         {{end}}

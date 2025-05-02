@@ -44,6 +44,30 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 301)
 }
 
+func Edit(w http.ResponseWriter, r *http.Request) {
+	productId := r.URL.Query().Get("id")
+	product := models.GetProduct(productId)
+
+	templates.ExecuteTemplate(w, "Edit", product)
+}
+
+func Update(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+
+		product := models.Product{
+			Id:          convertInt(r.FormValue("id"), "id"),
+			Name:        r.FormValue("name"),
+			Description: r.FormValue("description"),
+			Price:       convertFloat(r.FormValue("price"), "price"),
+			Quantity:    convertInt(r.FormValue("quantity"), "quantity"),
+		}
+
+		models.UpdateProduct(product)
+	}
+
+	http.Redirect(w, r, "/", 301)
+}
+
 func convertFloat(value string, attributeName string) float64 {
 	convertedValue, err := strconv.ParseFloat(value, 64)
 	if err != nil {

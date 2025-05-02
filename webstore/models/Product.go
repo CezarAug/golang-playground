@@ -1,6 +1,8 @@
 package models
 
-import "study.co.jp/webstore/db"
+import (
+	"study.co.jp/webstore/db"
+)
 
 type Product struct {
 	Name, Description string
@@ -45,6 +47,20 @@ func CreateProduct(name, description string, price float64, quantity int) {
 	insert.Exec(name, description, price, quantity)
 }
 
+func UpdateProduct(product Product) {
+	connection := db.Connect()
+	defer connection.Close()
+
+	update, err := connection.Prepare("UPDATE PRODUCTS SET NAME=$1, DESCRIPTION=$2, PRICE=$3, QUANTITY=$4 WHERE ID=$5")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	//TODO: All these instructions needs better error handling
+	update.Exec(product.Name, product.Description, product.Price, product.Quantity, product.Id)
+
+}
+
 func DeleteProduct(productId string) {
 	connection := db.Connect()
 	defer connection.Close()
@@ -55,4 +71,29 @@ func DeleteProduct(productId string) {
 	}
 
 	delete.Exec(productId)
+}
+
+func GetProduct(productId string) Product {
+	connection := db.Connect()
+	defer connection.Close()
+
+	selectedProducts, err := connection.Query("SELECT * FROM PRODUCTS WHERE ID=$1", productId)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	response := Product{}
+
+	for selectedProducts.Next() {
+		p := Product{}
+
+		err := selectedProducts.Scan(&p.Id, &p.Name, &p.Description, &p.Price, &p.Quantity)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		response = p
+	}
+
+	return response
 }
