@@ -113,3 +113,16 @@ func Salute(c *gin.Context) {
 		"response": "Hello " + name + ", how you doing?",
 	})
 }
+
+func ShowIndexPage(c *gin.Context) {
+
+	var students []models.Student
+	database.DB.Find(&students)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"students": students,
+	})
+}
+
+func RouteNotFoud(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "404.html", nil)
+}

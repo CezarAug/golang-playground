@@ -8,8 +8,12 @@ import (
 func HandleRequests() {
 	router := gin.Default()
 	// Default port: 8080
-	// Adding localhost to avoid windows asking everytime for firewall permissions
 
+	// Template and static assets sources
+	router.LoadHTMLGlob("templates/*")
+	router.Static("/assets", "./assets")
+
+	// Routes
 	router.GET("/students", controllers.GetAllStudents)
 	router.GET("/students/:id", controllers.GetStudentByID)
 	router.PATCH("/students/:id", controllers.UpdateStudent)
@@ -19,5 +23,11 @@ func HandleRequests() {
 	router.GET("/students/number/:number", controllers.GetStudentByNumber)
 
 	router.GET("/salute/:name", controllers.Salute)
+
+	//Templates
+	router.GET("/index", controllers.ShowIndexPage)
+	router.NoRoute(controllers.RouteNotFoud)
+
+	// Adding localhost to avoid windows asking everytime for firewall permissions
 	router.Run("localhost:8080")
 }

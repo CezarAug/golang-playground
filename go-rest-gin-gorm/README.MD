@@ -1,5 +1,23 @@
 A really simple API now with Gin
 
+Testing random functionalities, do not try in real environments
+
+
+Pending tasks:
+ - Separate different contexts into their own files
+ - Do not expose GORM objects directly
+ - Update tests, and organize them properly (can they be in a test package?)
+   - Also in tests, use another DB
+ - Create a better notion of environments, and have this application configurable for that
+ - Dockerize
+
+For future investigations:
+ - Auth, how to add some simple auth
+ - Logging: improve it and have it ready for actual usage
+ - Metrics: how they can be collected
+ - Testing: Check how to perform unit tests, also is there any BDD to use?
+ - OWASP: There are dependencies in the project, so vulnerabilities also have to be monitored
+
 
 ### Dependencies
 
