@@ -1,0 +1,47 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Student:
+    properties:
+      Number:
+        type: string
+      SSID:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    required:
+    - name
+    type: object
+info:
+  contact: {}
+paths:
+  /students:
+    get:
+      consumes:
+      - application/json
+      description: get all students, without filtering
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Student'
+      summary: Show all students
+      tags:
+      - students
+swagger: "2.0"

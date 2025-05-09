@@ -10,6 +10,7 @@ Pending tasks:
    - Also in tests, use another DB
  - Create a better notion of environments, and have this application configurable for that
  - Dockerize
+ - Finish the swagger docs
 
 For future investigations:
  - Auth, how to add some simple auth
@@ -17,7 +18,14 @@ For future investigations:
  - Metrics: how they can be collected
  - Testing: Check how to perform unit tests, also is there any BDD to use?
  - OWASP: There are dependencies in the project, so vulnerabilities also have to be monitored
+ - Swagger: Is it possible to separate the documentation from the code? (e.g.: Have the documentation on an interface and leave the actual code wihtout all the comments)
 
+
+### Generating the docs
+
+```
+swag init --parseDependency --parseInternal --parseDepth 1
+``` 
 
 ### Dependencies
 
@@ -31,3 +39,5 @@ For future investigations:
 
 - Testify (go get github.com/stretchr/testify)
    - Assertions in tests
+
+- Gin-swagger: github.com/swaggo/gin-swagger

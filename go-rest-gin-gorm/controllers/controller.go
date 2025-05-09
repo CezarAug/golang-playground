@@ -8,6 +8,15 @@ import (
 	"study.co.jp/go-rest-gin-gorm/models"
 )
 
+// GetAllStudents godoc
+//
+//	@Summary	Show all students
+//	@Description	get all students, without filtering
+//	@Tags	students
+//	@Accept	json
+//	@Produce	json
+//	@Success	200	{object}	models.Student
+//	@Router	/students	[get]
 func GetAllStudents(c *gin.Context) {
 	var students []models.Student
 	database.DB.Find(&students)
