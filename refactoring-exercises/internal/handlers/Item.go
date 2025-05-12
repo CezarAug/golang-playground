@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"myapi/internal/config"
 	"myapi/internal/models"
+	"myapi/internal/repositories"
 	"myapi/internal/services"
 	"net/http"
 	"strconv"
@@ -18,12 +19,16 @@ func ListItensHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var itens []models.Item
-	if err := config.DB.Find(&itens).Error; err != nil {
-		http.Error(w, "Erro ao buscar itens", http.StatusInternalServerError)
+
+	repository := repositories.NewItemRepository()
+	items, err := repository.ListAll()
+
+	if err != nil {
+		http.Error(w, "Error listing items", http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(itens)
+
+	json.NewEncoder(w).Encode(items)
 }
 
 // Buscar um único item pelo id (via query string: ?id=1)
@@ -43,11 +48,13 @@ func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
-	var item models.Item
-	if err := config.DB.First(&item, id).Error; err != nil {
-		http.Error(w, "Item não encontrado", http.StatusNotFound)
+
+	item, err := repositories.NewItemRepository().FindById(id)
+	if err != nil {
+		http.Error(w, "Could not find item", http.StatusInternalServerError)
 		return
 	}
+
 	json.NewEncoder(w).Encode(item)
 }
 
