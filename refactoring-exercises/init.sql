@@ -1,5 +1,5 @@
--- Cria a tabela "itens"
-CREATE TABLE IF NOT EXISTS itens (
+-- Cria a tabela "items"
+CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     codigo VARCHAR(50) NOT NULL UNIQUE,
@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS itens (
     quantidade INTEGER NOT NULL
 );
 
--- Insere 50 itens com dados exemplares
-INSERT INTO itens (nome, codigo, descricao, preco, quantidade) VALUES
+-- Insere 50 items com dados exemplares
+INSERT INTO items (nome, codigo, descricao, preco, quantidade) VALUES
 ('Teclado Mecânico', 'TEC001', 'Teclado mecânico com retroiluminação', 150.00, 20),
 ('Mouse Óptico', 'MOU002', 'Mouse óptico sem fio', 80.00, 50),
 ('Monitor LED 24"', 'MON003', 'Monitor LED Full HD de 24 polegadas', 700.00, 15),
