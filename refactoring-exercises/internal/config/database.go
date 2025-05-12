@@ -11,7 +11,7 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	dsn := "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=UTC"
+	dsn := "host=db user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=UTC"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Erro ao conectar com o BD: %v", err)
@@ -20,6 +20,6 @@ func Connect() {
 
 	// AutoMigrate para criar/ajustar tabelas
 	DB.AutoMigrate(&models.Iten{})
-	DB.AutoMigrate(&models.Cat{})
+	DB.AutoMigrate(&models.Categoria{})
 
 }
