@@ -16,7 +16,6 @@ import (
 
 // Listar todos os itens
 func ListItens(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 
 	repository := repositories.NewItemRepository()
 	items, err := repository.ListAll()
@@ -31,7 +30,6 @@ func ListItens(w http.ResponseWriter, r *http.Request) {
 
 // Buscar um único item pelo id (via query string: ?id=1)
 func GetItem(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 
@@ -56,7 +54,6 @@ func GetItem(w http.ResponseWriter, r *http.Request) {
 
 // Buscar um item pelo campo "codigo"
 func GetItemByCodigo(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(r)
 
 	cod := vars["codigo"]
@@ -75,7 +72,6 @@ func GetItemByCodigo(w http.ResponseWriter, r *http.Request) {
 
 // Criar um novo item (envie JSON via POST)
 func CreateItem(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var item models.Item
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
 		http.Error(w, "Erro ao decodificar o item", http.StatusBadRequest)
@@ -98,7 +94,6 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 
 // Atualizar um item (envie JSON via PUT, com o campo id preenchido)
 func UpdateItem(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var item models.Item
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
 		http.Error(w, "Erro ao decodificar o item", http.StatusBadRequest)

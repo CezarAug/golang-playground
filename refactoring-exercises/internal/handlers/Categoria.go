@@ -14,7 +14,6 @@ import (
 
 // Listar todas as categorias
 func ListCategorias(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var categorias []models.Categoria
 	if err := config.DB.Find(&categorias).Error; err != nil {
 		http.Error(w, "Erro ao buscar categorias", http.StatusInternalServerError)
@@ -25,7 +24,6 @@ func ListCategorias(w http.ResponseWriter, r *http.Request) {
 
 // Buscar uma única categoria pelo id (via query string: ?id=1)
 func GetCategoria(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 	if idStr == "" {
@@ -47,7 +45,6 @@ func GetCategoria(w http.ResponseWriter, r *http.Request) {
 
 // Criar uma nova categoria (envie JSON via POST)
 func CreateCategoria(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var categoria models.Categoria
 	if err := json.NewDecoder(r.Body).Decode(&categoria); err != nil {
 		http.Error(w, "Erro ao decodificar a categoria", http.StatusBadRequest)
@@ -62,7 +59,6 @@ func CreateCategoria(w http.ResponseWriter, r *http.Request) {
 
 // Atualizar uma categoria (envie JSON via PUT, com o campo id preenchido)
 func UpdateCategoria(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var categoria models.Categoria
 	if err := json.NewDecoder(r.Body).Decode(&categoria); err != nil {
 		http.Error(w, "Erro ao decodificar a categoria", http.StatusBadRequest)
