@@ -4,45 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"myapi/internal/config"
+	"myapi/internal/models"
 	"net/http"
 	"strconv"
-
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
-// Modelo para a tabela "itens"
-type Iten struct {
-	Id         uint    `gorm:"primaryKey" json:"id"`
-	Nome       string  `json:"nome"`
-	Codigo     string  `gorm:"unique" json:"codigo"`
-	Descricao  string  `json:"descricao"`
-	Preco      float64 `json:"preco"`
-	Quantidade int     `json:"quantidade"`
-}
-
-// Modelo para a tabela "categorias"
-type Cat struct {
-	Id        uint   `gorm:"primaryKey" json:"id"`
-	Nome      string `json:"nome"`
-	Codigo    string `gorm:"unique" json:"codigo"`
-	Descricao string `json:"descricao"`
-}
-
-var bd *gorm.DB
-
 func main() {
-	// Conexão com o Postgres
-	dsn := "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=UTC"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatalf("Erro ao conectar com o BD: %v", err)
-	}
-	bd = db
-
-	// AutoMigrate para criar/ajustar tabelas
-	bd.AutoMigrate(&Iten{})
-	bd.AutoMigrate(&Cat{})
+	config.Connect()
 
 	// Endpoint raiz
 	http.HandleFunc("/api", indexHandler)
@@ -80,8 +49,8 @@ func listItensHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var itens []Iten
-	if err := bd.Find(&itens).Error; err != nil {
+	var itens []models.Iten
+	if err := config.DB.Find(&itens).Error; err != nil {
 		http.Error(w, "Erro ao buscar itens", http.StatusInternalServerError)
 		return
 	}
@@ -105,8 +74,8 @@ func getItenHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
-	var item Iten
-	if err := bd.First(&item, id).Error; err != nil {
+	var item models.Iten
+	if err := config.DB.First(&item, id).Error; err != nil {
 		http.Error(w, "Item não encontrado", http.StatusNotFound)
 		return
 	}
@@ -125,9 +94,9 @@ func getItenByCodigoHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Código não fornecido", http.StatusBadRequest)
 		return
 	}
-	var item Iten
+	var item models.Iten
 	// Busca o item onde o campo "codigo" é igual ao valor fornecido
-	if err := bd.Where("codigo = ?", cod).First(&item).Error; err != nil {
+	if err := config.DB.Where("codigo = ?", cod).First(&item).Error; err != nil {
 		http.Error(w, "Item não encontrado", http.StatusNotFound)
 		return
 	}
@@ -141,12 +110,12 @@ func createItenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var item Iten
+	var item models.Iten
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
 		http.Error(w, "Erro ao decodificar o item", http.StatusBadRequest)
 		return
 	}
-	if err := bd.Create(&item).Error; err != nil {
+	if err := config.DB.Create(&item).Error; err != nil {
 		http.Error(w, "Erro ao criar o item", http.StatusInternalServerError)
 		return
 	}
@@ -160,12 +129,12 @@ func updateItenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var item Iten
+	var item models.Iten
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
 		http.Error(w, "Erro ao decodificar o item", http.StatusBadRequest)
 		return
 	}
-	if err := bd.Save(&item).Error; err != nil {
+	if err := config.DB.Save(&item).Error; err != nil {
 		http.Error(w, "Erro ao atualizar o item", http.StatusInternalServerError)
 		return
 	}
@@ -188,7 +157,7 @@ func deleteItenHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
-	if err := bd.Delete(&Iten{}, id).Error; err != nil {
+	if err := config.DB.Delete(&models.Iten{}, id).Error; err != nil {
 		http.Error(w, "Erro ao deletar o item", http.StatusInternalServerError)
 		return
 	}
@@ -204,8 +173,8 @@ func listCategoriasHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var cats []Cat
-	if err := bd.Find(&cats).Error; err != nil {
+	var cats []models.Cat
+	if err := config.DB.Find(&cats).Error; err != nil {
 		http.Error(w, "Erro ao buscar categorias", http.StatusInternalServerError)
 		return
 	}
@@ -229,8 +198,8 @@ func getCategoriaHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
-	var cat Cat
-	if err := bd.First(&cat, id).Error; err != nil {
+	var cat models.Cat
+	if err := config.DB.First(&cat, id).Error; err != nil {
 		http.Error(w, "Categoria não encontrada", http.StatusNotFound)
 		return
 	}
@@ -244,12 +213,12 @@ func createCategoriaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var cat Cat
+	var cat models.Cat
 	if err := json.NewDecoder(r.Body).Decode(&cat); err != nil {
 		http.Error(w, "Erro ao decodificar a categoria", http.StatusBadRequest)
 		return
 	}
-	if err := bd.Create(&cat).Error; err != nil {
+	if err := config.DB.Create(&cat).Error; err != nil {
 		http.Error(w, "Erro ao criar a categoria", http.StatusInternalServerError)
 		return
 	}
@@ -263,12 +232,12 @@ func updateCategoriaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	var cat Cat
+	var cat models.Cat
 	if err := json.NewDecoder(r.Body).Decode(&cat); err != nil {
 		http.Error(w, "Erro ao decodificar a categoria", http.StatusBadRequest)
 		return
 	}
-	if err := bd.Save(&cat).Error; err != nil {
+	if err := config.DB.Save(&cat).Error; err != nil {
 		http.Error(w, "Erro ao atualizar a categoria", http.StatusInternalServerError)
 		return
 	}
@@ -291,7 +260,7 @@ func deleteCategoriaHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
-	if err := bd.Delete(&Cat{}, id).Error; err != nil {
+	if err := config.DB.Delete(&models.Cat{}, id).Error; err != nil {
 		http.Error(w, "Erro ao deletar a categoria", http.StatusInternalServerError)
 		return
 	}
